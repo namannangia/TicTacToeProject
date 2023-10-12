@@ -1,5 +1,12 @@
 import React from "react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import "./App.css";
+import Header from "./components/Header";
+import Hero from "./components/Hero";
+import Footer from "./components/Footer";
+import Overlay from "./Overlay";
 
 function App() {
   function drawLine(x1, y1, x2, y2) {
@@ -12,18 +19,18 @@ function App() {
     ctx.lineWidth = 8;
     ctx.stroke();
   }
-  function editRecord(position, value) {
-    if (x1 > 0 && x1 < 100 && y1 > 0 && y1 < 100) {
-      if (record.charAt(0) === "2") {
-        drawSymbol(50, 50);
-        chance
-          ? setRecord((e) => "1".concat(e.substring(1)))
-          : setRecord((e) => "0".concat(e.substring(1)));
-        setChance((e) => !e);
-      } else alert("Move Not allowed");
-    }
+  function resetGame() {
+    const canvas = document.getElementById("myCanvas");
+    const ctx = canvas.getContext("2d");
+    ctx.reset();
+    makeBoard(factor);
+    setChance(true);
+    setRecord("abcdefghi");
+    setWinner(2);
+    SetTries(0);
   }
   function drawSymbol(x1, y1) {
+    SetTries((e) => e + 1);
     if (chance) {
       drawLine(x1 - 20, y1 - 20, x1, y1);
       drawLine(x1 - 20, y1 + 20, x1, y1);
@@ -37,68 +44,28 @@ function App() {
       ctx.stroke();
     }
   }
+  function editRecord(pos, x1, y1) {
+    var temp = "abcdefghi";
+    if (record.charAt(pos - 1) === temp.charAt(pos - 1)) {
+      drawSymbol(x1, y1);
+      chance
+        ? setRecord((e) =>
+            e.substring(0, pos - 1).concat("1", e.substring(pos))
+          )
+        : setRecord((e) =>
+            e.substring(0, pos - 1).concat("0", e.substring(pos))
+          );
+      setChance((e) => !e);
+    } else toast.info("Move not allowed");
+  }
   function runChance(x1, y1) {
-    //pos 1
-    if (x1 > 0 && x1 < 100 && y1 > 0 && y1 < 100) {
-      if (record.charAt(0) === "2") {
-        drawSymbol(50, 50);
-        chance
-          ? setRecord((e) => "1".concat(e.substring(1)))
-          : setRecord((e) => "0".concat(e.substring(1)));
-        setChance((e) => !e);
-      } else alert("Move Not allowed");
-    }
-    if (x1 > 0 && x1 < 100 && y1 > 100 && y1 < 200) {
-      //pos 4
-      if (record.charAt(3) === "2") {
-        drawSymbol(50, 150);
-        chance
-          ? setRecord((e) => e.substring(0, 3).concat("1", e.substring(4)))
-          : setRecord((e) => e.substring(0, 3).concat("0", e.substring(4)));
-        setChance((e) => !e);
-      } else alert("Move Not allowed");
-    }
-    if (x1 > 0 && x1 < 100 && y1 > 200 && y1 < 300) {
-      //pos 7
-      if (record.charAt(6) === "2") {
-        drawSymbol(50, 250);
-        chance
-          ? setRecord((e) => e.substring(0, 6).concat("1", e.substring(7)))
-          : setRecord((e) => e.substring(0, 6).concat("0", e.substring(7)));
-        setChance((e) => !e);
-      } else alert("Move Not allowed");
-    }
-    if (x1 > 100 && x1 < 200 && y1 > 0 && y1 < 100) {
-      //pos 2
-      if (record.charAt(1) === "2") {
-        drawSymbol(150, 50);
-        chance
-          ? setRecord((e) => e.substring(0, 1).concat("1", e.substring(2)))
-          : setRecord((e) => e.substring(0, 1).concat("0", e.substring(2)));
-        setChance((e) => !e);
-      } else alert("Move Not allowed");
-    }
-    if (x1 > 100 && x1 < 200 && y1 > 100 && y1 < 200) {
-      //pos 5
-      if (record.charAt(4) === "2") {
-        drawSymbol(150, 150);
-        chance
-          ? setRecord((e) => e.substring(0, 5).concat("1", e.substring(6)))
-          : setRecord((e) => e.substring(0, 5).concat("0", e.substring(6)));
-        setChance((e) => !e);
-      } else alert("Move Not allowed");
-    }
-    if (x1 > 100 && x1 < 200 && y1 > 200 && y1 < 300) {
-      drawSymbol(150, 250);
-    }
-    if (x1 > 200 && x1 < 300 && y1 > 0 && y1 < 100) {
-      drawSymbol(250, 50);
-    }
-    if (x1 > 200 && x1 < 300 && y1 > 100 && y1 < 200) {
-      drawSymbol(250, 150);
-    }
-    if (x1 > 200 && x1 < 300 && y1 > 200 && y1 < 300) {
-      drawSymbol(250, 250);
+    for (let x = 0; x <= 300; x += 100) {
+      for (let y = 0; y <= 300; y += 100) {
+        if (x1 > x && x1 < x + 100 && y1 > y && y1 < y + 100) {
+          editRecord((x / 100) * 3 + y / 100 + 1, x + 50, y + 50);
+          return;
+        }
+      }
     }
   }
   function makeBoard(factor) {
@@ -107,22 +74,13 @@ function App() {
     drawLine(0 + factor, 100 - factor, 300 - factor, 100 - factor);
     drawLine(0 + factor, 200 - factor, 300 - factor, 200 - factor);
   }
-  // player1 starts first with X
-  // player2 starts second with O
-  // 0 represents circle
-  // 1 represents cross
-  // 2 represents blank
-  // const [red, setRed] = React.useState(0);
-  // const [green, setGreen] = React.useState(0);
-  // const [blue, setBlue] = React.useState(0);
 
-  const [record, setRecord] = React.useState("222222222");
+  const [record, setRecord] = React.useState("abcdefghi");
   const [chance, setChance] = React.useState(true);
   const [winner, setWinner] = React.useState(2);
-  const [x1, setX1] = React.useState(0);
-  const [y1, setY1] = React.useState(0);
   const [x2, setX2] = React.useState(0);
   const [y2, setY2] = React.useState(0);
+  const [tries, SetTries] = React.useState(0);
   const factor = 0;
 
   React.useEffect(() => {
@@ -130,201 +88,78 @@ function App() {
   }, [y2]);
 
   React.useEffect(() => {
-    if ((record.charAt(0) === record.charAt(1)) === record.charAt(2))
-      setWinner(record.charAt(0) === "1" ? 1 : 0);
+    const winningCombos = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [2, 4, 6],
+      [0, 4, 8],
+    ];
 
-    if ((record.charAt(4) === record.charAt(5)) === record.charAt(3))
-      setWinner(record.charAt(4) === "1" ? 1 : 0);
-
-    if ((record.charAt(6) === record.charAt(7)) === record.charAt(8))
-      setWinner(record.charAt(6) === "1" ? 1 : 0);
-
-    if ((record.charAt(0) === record.charAt(3)) === record.charAt(6))
-      setWinner(record.charAt(0) === "1" ? 1 : 0);
-
-    if ((record.charAt(1) === record.charAt(4)) === record.charAt(7))
-      setWinner(record.charAt(1) === "1" ? 1 : 0);
-
-    if ((record.charAt(2) === record.charAt(5)) === record.charAt(8))
-      setWinner(record.charAt(2) === "1" ? 1 : 0);
-
-    if ((record.charAt(2) === record.charAt(4)) === record.charAt(6))
-      setWinner(record.charAt(2) === "1" ? 1 : 0);
-
-    if ((record.charAt(0) === record.charAt(4)) === record.charAt(8))
-      setWinner(record.charAt(0) === "1" ? 1 : 0);
-
-    console.log(record + " :" + winner);
+    for (const combo of winningCombos) {
+      const [a, b, c] = combo;
+      if (
+        record.charAt(a) === record.charAt(b) &&
+        record.charAt(b) === record.charAt(c)
+      ) {
+        setWinner(record.charAt(a) === "1" ? 1 : 0);
+        return;
+      }
+    }
   }, [record]);
 
   React.useEffect(() => {
     makeBoard(factor);
-    // drawSymbol(50, 250);
-    // drawSymbol(150, 50);
   }, []);
 
   return (
     <div className="App">
+      <ToastContainer position="top-right" />
       <div
+        className="SubDiv"
         style={{
-          display: "flex",
-          justifyContent: "center",
-          flexDirection: "column",
-          alignItems: "center",
-          height: "100vh",
-          width: "100vw",
-          backgroundColor: winner === 2 ? "white" : "rgba(0,0,0,0.2)",
+          backgroundColor: "white",
         }}
       >
-        <h1
-          style={{
-            fontWeight: "400",
-            fontVariant: "small-caps",
-            marginBottom: "70px",
-            textAlign: "center",
-          }}
-        >
-          Live
-          <br /> tic-tac-toe
-          <br /> {record}
-        </h1>
-        <canvas
-          id="myCanvas"
-          width="300"
-          height="300"
-          style={{
-            backgroundColor: chance
-              ? "rgba(225, 152, 152,0.5) "
-              : "rgba(152, 228, 255,0.5)",
-            // backgroundColor: "white",
-            borderRadius: "20px",
-            boxShadow: "0px 0px 40px 30px ".concat(
-              chance ? "rgb(225, 152, 152)" : "rgb(152, 228, 255)"
-            ),
-          }}
-          onMouseUp={(event) => {
-            setX2(
-              (e) =>
-                e +
-                event.clientX -
-                e -
-                Math.ceil(
-                  document.getElementById("myCanvas").getBoundingClientRect()
-                    .left
-                )
-            );
-            setY2(
-              (e) =>
-                e +
-                event.clientY -
-                e -
-                Math.ceil(
-                  document.getElementById("myCanvas").getBoundingClientRect()
-                    .top
-                )
-            );
-          }}
-        ></canvas>
-        <button
-          style={{ visibility: "hidden" }}
-          onClick={() => {
-            const canvas = document.getElementById("myCanvas");
-            const ctx = canvas.getContext("2d");
-            ctx.clearRect(0, 0, 300, 300);
-          }}
-        >
-          Clear Canvas
-        </button>
-        <input
-          type="text"
-          value={x1}
-          onChange={(e) => {
-            setX1(e.target.value);
-          }}
-        ></input>
-        <input
-          type="text"
-          value={y1}
-          onChange={(e) => {
-            setY1(e.target.value);
-          }}
-        ></input>
-        <input
-          type="text"
-          value={x2}
-          onChange={(e) => {
-            setX2(e.target.value);
-          }}
-        ></input>
-        <input
-          type="text"
-          value={y2}
-          onChange={(e) => {
-            setY2(e.target.value);
-          }}
-        ></input>
-        <button
-          style={{ visibility: "hidden" }}
-          onClick={() => {
-            drawLine(x1, y1, x2, y2);
-          }}
-        >
-          Submit{" "}
-        </button>
-        <div style={{ flex: 1, marginBottom: "40px" }}>
-          <h1
-            style={{
-              margin: "0px",
-              fontWeight: "400",
-              fontVariant: "small-caps",
-            }}
-          >
-            {chance ? "Player 1" : "Player 2"}
-          </h1>
-          <h3
-            style={{
-              margin: "0px",
-              fontWeight: "400",
-              fontVariant: "small-caps",
-            }}
-          >
-            should move now!
-          </h3>
-        </div>
+        <Header tries={tries} record={record} />
+        <Hero chance={chance} setX2={setX2} setY2={setY2} />
+        <Footer chance={chance} />
       </div>
-      <div
-        style={{
-          height: "100vh",
-          width: "100vw",
-          position: "absolute",
-          display: "flex",
-          top: "0px",
-          alignItems: "center",
-          backgroundColor: "rgba(0,0,0,0.6)",
-          visibility: winner === 2 ? "hidden" : "visible",
-        }}
-      >
-        <h1
-          style={{
-            flex: 1,
-            height: "10%",
-            justifyContent: "center",
-            display: "flex",
-            alignContent: "center",
-            justifyItems: "center",
-            textAlign: "center",
-            alignItems: "center",
-            backgroundColor: "white",
-          }}
-        >
-          Player {winner === 1 ? "1" : "2"} wins!
-        </h1>
-      </div>
+      <Overlay tries={tries} winner={winner} resetGame={resetGame} />
     </div>
   );
 }
 
 export default App;
+
+/**
+ *
+ * Made by NAMAN
+ * https://www.github.com/namannangia
+ *
+ * Code logics shortened using AI after proper testing
+ *
+ * WORKING MECHANISM
+ *
+ * 1) A 300x300 CANVAS IS DRAWN
+ * 2) 2 spacing lines horizontally with 100px margin are added using makeBoard function
+ * 3) 2 spacing lines vertically with 100px margin are added using makeBoard function
+ * 4) Ranges are specified mapping to 9 different imaginary boxes where symbols will be drawn using drawSymbol function
+ * 5) The draw symbol function checks if it is turn of X or 0 to play and draws symbols accordingly
+ * 6) On Every symbol drawn, a counter is incremented  and another function constantly checks for winning combinations
+ * 7) If any combination is found, games stops, overlay is displayed with winning player info along with PLAY AGAIN button
+ * 8) UI indications for the player expected to move that turn
+ * 9) If 9 tries are reached, game ends and a Draw(game Tie) is considered final
+ * 10) UI Indications to prevent double entry on a pre-filled box
+ * 11) Enteries are stored as a 9-character string in a React state named "Record" starting 'a' to 'i'
+ * 12) each digit represents a box starting from zero from top left to  8 in bottom right
+ * 13) This string is then processed to find winning combination with 0 marked as Circle or Player 2 and 1 as Cross or Player 1
+ * 14) After game ends, resetGame() function can be called that clears the canvas and re-draws the markings and resets all states to default
+ *
+ * */
 
 /**
  * 0  100  100  300
@@ -352,3 +187,33 @@ export default App;
 // );
 // }, 500);
 // });
+
+// function runChance(x1, y1) {
+//   if (x1 > 0 && x1 < 100 && y1 > 0 && y1 < 100) {
+//     editRecord(1, 50, 50);
+//   }
+//   if (x1 > 0 && x1 < 100 && y1 > 100 && y1 < 200) {
+//     editRecord(4, 50, 150);
+//   }
+//   if (x1 > 0 && x1 < 100 && y1 > 200 && y1 < 300) {
+//     editRecord(7, 50, 250);
+//   }
+//   if (x1 > 100 && x1 < 200 && y1 > 0 && y1 < 100) {
+//     editRecord(2, 150, 50);
+//   }
+//   if (x1 > 100 && x1 < 200 && y1 > 100 && y1 < 200) {
+//     editRecord(5, 150, 150);
+//   }
+//   if (x1 > 100 && x1 < 200 && y1 > 200 && y1 < 300) {
+//     editRecord(8, 150, 250);
+//   }
+//   if (x1 > 200 && x1 < 300 && y1 > 0 && y1 < 100) {
+//     editRecord(3, 250, 50);
+//   }
+//   if (x1 > 200 && x1 < 300 && y1 > 100 && y1 < 200) {
+//     editRecord(6, 250, 150);
+//   }
+//   if (x1 > 200 && x1 < 300 && y1 > 200 && y1 < 300) {
+//     editRecord(9, 250, 250);
+//   }
+// }
