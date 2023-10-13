@@ -39,7 +39,9 @@ function Overlay({ tries, winner, resetGame }) {
       </h1>
       <br />{" "}
       <button
-        onClick={resetGame}
+        onClick={() => {
+          window.location.reload();
+        }}
         style={{
           backgroundColor: "white",
           borderRadius: "20px",
