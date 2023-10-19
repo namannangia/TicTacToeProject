@@ -51,22 +51,100 @@ input {
     font-size: 1rem;
     margin: 20px;
     flex: 1;
-    max-height: 10%;
-    max-width: fit-content;
+    max-height: 5%;
+    outline: 1px solid black;
     border: none;
-    border-radius: 20px;
-    padding: 0px 5px;
+    border-radius: 60px;
+    padding: 4px 1px;
     text-align: center;
+    color: blue;
+    transition: transform 0.2s ease-in-out;
+}
+input::-webkit-inner-spin-button {
+    appearance: none;
+    -webkit-appearance: none;
 }
 input:focus {
-    outline: none;
+    outline: 3px solid blue;
+    transform: scale(1.2);
 }
 #splashSubmitBtn {
-    padding: 10px 20px;
-    background-color: greenyellow;
+    padding: 10px 30px;
+    background-color: blue;
+    color: white;
+    font-weight: 600;
     outline: none;
     border: none;
     border-radius: 20px;
     box-shadow: 5px 5px 10px 2px rgba(0, 0, 0, 0.4);
     margin-top: 5%;
+    transition: transform 0.2s ease-in-out;
+    /* flex: 1; */
+}
+@media screen and (max-width: 400px) {
+    #splashSubmitBtn {
+        transition: none;
+    }
+    #splashSubmitBtn:hover {
+        transform: none;
+    }
+}
+#splashSubmitBtn:hover {
+    transform: scale(1.2);
+}
+#randomBtn {
+    padding: 5px 15px;
+    background-color: white;
+    color: blue;
+    display: flex;
+    font-weight: 400;
+    outline: 2px solid blue;
+    align-items: center;
+    border: none;
+    border-radius: 20px;
+    /* box-shadow: 5px 5px 10px 2px rgba(0, 0, 0, 0.4); */
+    margin-top: 5%;
+    transition: transform 0.2s ease-in-out;
+}
+#randomBtn:hover {
+    transform: scale(1.3);
+}
+#randomBtn:disabled {
+    background-color: rgb(217, 217, 217);
+    border: none;
+    box-shadow: none;
+    /* outline: 2px solid rgb(192, 192, 192); */
+    outline: none;
+    color: rgb(192, 192, 192);
+    transition: none;
+    transform: none;
+}
+#splashSubmitBtn:disabled {
+    background-color: rgb(217, 217, 217);
+    border: none;
+    box-shadow: none;
+    box-shadow: none;
+    /* outline: 2px solid rgb(192, 192, 192); */
+    outline: none;
+    color: rgb(192, 192, 192);
+    transition: none;
+    transform: none;
+}
+input:disabled {
+    color: rgb(192, 192, 192);
+}
+#theSpan {
+    animation: glow 1s ease infinite;
+    animation-play-state: running;
+}
+@keyframes glow {
+    0% {
+        transform: scale(0.8);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(0.8);
+    }
 }

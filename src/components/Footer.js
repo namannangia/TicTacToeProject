@@ -4,9 +4,13 @@ function Footer({ chance, username, socket }) {
     const [player1, setPlayer1] = useState("");
     const [player2, setPlayer2] = useState("");
     React.useEffect(() => {
-        socket.on("userInfo", (player1, player2) => {
+        socket.on("userInfo", (player1, player2, callback) => {
+            console.log("user info rcvd", username);
             setPlayer1(player1);
             setPlayer2(player2);
+            callback({
+                status: "ok",
+            });
         });
     }, []);
     return (
@@ -26,7 +30,7 @@ function Footer({ chance, username, socket }) {
                         : player2 + "'s Turn"
                     : !chance
                     ? "Your Turn"
-                    : player1 + "'s TUrn"}
+                    : player1 + "'s Turn"}
             </h1>
             <h3
                 style={{

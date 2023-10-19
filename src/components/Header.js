@@ -1,12 +1,16 @@
 import React, { useState } from "react";
+import "./Header.css";
 
 function Header({ record, tries, socket, username }) {
     const [player1, setPlayer1] = useState("");
     const [player2, setPlayer2] = useState("");
     React.useEffect(() => {
-        socket.on("userInfo", (player1, player2) => {
+        socket.on("userInfo", (player1, player2, callback) => {
             setPlayer1(player1);
             setPlayer2(player2);
+            callback({
+                status: "ok",
+            });
         });
     }, []);
     return (

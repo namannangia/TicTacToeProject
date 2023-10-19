@@ -2,6 +2,8 @@ import React from "react";
 import Header from "./Header";
 import { ToastContainer } from "react-toastify";
 import { toast } from "react-toastify";
+import { customAlphabet } from "nanoid";
+import { generateUsername } from "friendly-username-generator";
 
 function SplashScreen({
     setPage,
@@ -11,7 +13,24 @@ function SplashScreen({
     setUsername,
     socket,
 }) {
+    const nanoid2 = customAlphabet("1234567890", 4);
     const [loading, setLoading] = React.useState(false);
+    React.useEffect(() => {
+        socket.on("notif", (msg) => {
+            toast.info(msg);
+
+            if (msg.toString().includes("is Full.")) {
+                setLoading(false);
+            }
+        });
+    }, []);
+    React.useEffect(() => {
+        if (loading) document.getElementById("randomImg").style.opacity = "0.2";
+    }, [loading]);
+    React.useEffect(() => {
+        if (roomKey.toString().length >= 5)
+            setRoomKey((e) => e.toString().substring(0, 4));
+    }, [roomKey]);
     return (
         <div
             style={{
@@ -20,7 +39,7 @@ function SplashScreen({
                 width: "100vw",
                 height: "100vh",
                 flexDirection: "column",
-                backgroundColor: "rgba(0,255,0,0.2)",
+                backgroundColor: "",
             }}
         >
             <ToastContainer position="top-right" />
@@ -33,7 +52,7 @@ function SplashScreen({
                         textAlign: "center",
                     }}
                 >
-                    Live
+                    Live <span id="theSpan">❤️</span>
                     <br /> tic-tac-toe
                     <br />
                 </h1>
@@ -46,27 +65,12 @@ function SplashScreen({
                     justifyContent: "center",
                     alignItems: "center",
                 }}
-                onSubmit={async (e) => {
+                onSubmit={(e) => {
                     e.preventDefault();
-                    setLoading((e) => !e);
-                    socket.timeout(1000).emit(
-                        "setInitial",
-                        {
-                            username: username,
-                            roomKey: roomKey,
-                        },
-                        (err, val) => {
-                            if (err) {
-                                toast.error("Connection timed out");
-                                setLoading((e) => !e);
-                            } else setPage((e) => !e);
-                        }
-                    );
                 }}
             >
                 <input
                     type="text"
-                    required={true}
                     disabled={loading}
                     value={username}
                     placeholder="Enter Username"
@@ -75,9 +79,8 @@ function SplashScreen({
                     }}
                 />
                 <input
-                    type="text"
+                    type="number"
                     disabled={loading}
-                    required={true}
                     value={roomKey}
                     placeholder="Enter Room Key"
                     onChange={(e) => {
@@ -85,19 +88,58 @@ function SplashScreen({
                     }}
                 />
                 <button
+                    id="randomBtn"
+                    onClick={() => {
+                        if (username === "")
+                            setUsername(
+                                generateUsername({
+                                    useRandomNumber: false,
+                                })
+                            );
+                        if (roomKey === "")
+                            setRoomKey(
+                                Math.floor(Math.random() * (9999 - 1111 + 1)) +
+                                    1111
+                            );
+                        document.getElementById("randomBtn").style.visibility =
+                            "hidden";
+                    }}
+                    disabled={loading}
+                    style={{ textAlign: "center", verticalAlign: "center" }}
+                >
+                    <img
+                        height={20}
+                        id="randomImg"
+                        width={20}
+                        style={{ marginRight: "7px" }}
+                        alt="GenerateRandom"
+                        src={require("../assets/random.png")}
+                    />{" "}
+                    Random
+                </button>
+                <button
                     type="submit"
                     id="splashSubmitBtn"
                     disabled={loading}
-                    onMouseUp={() => {
-                        document.getElementById(
-                            "splashSubmitBtn"
-                        ).style.boxShadow =
-                            "5px 5px 10px 2px rgba(0, 0, 0, 0.4)";
-                    }}
-                    onMouseDown={() => {
-                        document.getElementById(
-                            "splashSubmitBtn"
-                        ).style.boxShadow = "none";
+                    onClick={() => {
+                        if (username === "")
+                            toast.error("Username cannot be empty");
+                        if (roomKey === "")
+                            toast.error("Room Key cannot be empty");
+                        setLoading((e) => !e);
+                        socket.timeout(1000).emit(
+                            "setInitial",
+                            {
+                                username: username,
+                                roomKey: roomKey,
+                            },
+                            (err, val) => {
+                                if (err) {
+                                    toast.error("Connection timed out");
+                                    setLoading((e) => !e);
+                                }
+                            }
+                        );
                     }}
                 >
                     Login {"›"}
