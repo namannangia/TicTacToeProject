@@ -1,0 +1,65 @@
+.HeaderMainDiv {
+    display: flex;
+    flex: 1;
+    width: 100vw;
+    /* border: 1px solid red; */
+    margin: 0;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+.headerSubDiv {
+    display: flex;
+    width: 100%;
+    flex: 1;
+    padding: 20px 0px;
+    /* border: 3px solid black; */
+    flex-direction: row;
+    margin: 0;
+    justify-content: space-evenly;
+    align-items: center;
+    font-size: 25px;
+    text-align: center;
+    font-weight: 100;
+}
+.headerSpan1 {
+    flex: 1;
+    background-color: rgb(135, 196, 255);
+    color: white;
+    width: fit-content;
+    padding: 5px 20px;
+    box-shadow: 8px 8px 10px 0px rgba(135, 196, 255, 0.5);
+    border-radius: 0px 20px 20px 0px;
+}
+.headerSpan3 {
+    flex: 1;
+    background-color: #99b080;
+    color: white;
+    width: fit-content;
+    box-shadow: 8px 8px 10px 0px rgba(153, 176, 128, 0.5);
+    padding: 5px 20px;
+    border-radius: 20px 0px 0px 20px;
+}
+.headerTitle {
+    margin: 0px;
+    font-size: 1.2rem;
+    font-family: monospace;
+    font-variant: traditional;
+}
+.headerHeading {
+    font-weight: 400;
+    font-variant: small-caps;
+    margin-bottom: 70px;
+    text-align: center;
+}
+
+@media screen and (max-width: 415px) {
+    .headerSubDiv {
+        font-size: 15px;
+    }
+    .HeaderMainDiv {
+    }
+    .headerHeading {
+        margin-bottom: 10px;
+    }
+}

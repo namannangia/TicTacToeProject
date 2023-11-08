@@ -1,33 +1,11 @@
 .App {
     text-align: center;
     display: flex;
-    height: 100vh;
     flex-direction: column;
-    width: 100vw;
-}
-
-.App-logo {
-    height: 40vmin;
-    pointer-events: none;
-}
-
-.App-header {
-    background-color: #282c34;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
-}
-
-.App-link {
-    color: #61dafb;
-}
-
-.heart {
-    color: #ff0000;
+    /* border: 2px solid red; */
+    /* align-items: safe; */
+    /* border: 2px solid black; */
+    /* width: 100vw; */
 }
 
 .small {
@@ -41,32 +19,37 @@
 .subDiv {
     display: flex;
     justify-content: center;
+    /* justify-content: space-evenly; */
     flex-direction: column;
     align-items: center;
     height: 100vh;
     width: 100vw;
 }
 
-input {
-    font-size: 1rem;
+.splashScreenInput {
+    font-size: 130%;
     margin: 20px;
     flex: 1;
-    max-height: 5%;
-    outline: 1px solid black;
     border: none;
     border-radius: 60px;
-    padding: 4px 1px;
+    padding: 10px 3px;
     text-align: center;
     color: blue;
     transition: transform 0.2s ease-in-out;
 }
-input::-webkit-inner-spin-button {
+.splashScreenInput::-webkit-inner-spin-button {
     appearance: none;
     -webkit-appearance: none;
 }
-input:focus {
+.splashScreenInput:focus {
     outline: 3px solid blue;
     transform: scale(1.2);
+}
+.heroMainDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 #splashSubmitBtn {
     padding: 10px 30px;
@@ -80,14 +63,6 @@ input:focus {
     margin-top: 5%;
     transition: transform 0.2s ease-in-out;
     /* flex: 1; */
-}
-@media screen and (max-width: 400px) {
-    #splashSubmitBtn {
-        transition: none;
-    }
-    #splashSubmitBtn:hover {
-        transform: none;
-    }
 }
 #splashSubmitBtn:hover {
     transform: scale(1.2);
@@ -130,11 +105,12 @@ input:focus {
     transition: none;
     transform: none;
 }
-input:disabled {
+.splashScreenInput:disabled {
     color: rgb(192, 192, 192);
 }
 #theSpan {
     animation: glow 1s ease infinite;
+    /* animation-iteration-count: 5; */
     animation-play-state: running;
 }
 @keyframes glow {
@@ -146,5 +122,65 @@ input:disabled {
     }
     100% {
         transform: scale(0.8);
+    }
+}
+@media screen and (max-width: 415px) {
+    .heroMainDiv {
+        padding: 10%;
+    }
+    .splashScreenInput {
+        font-size: 20px;
+        margin: 20px;
+        flex: 1;
+        border: none;
+        border-radius: 20px;
+        padding: 0px 0px;
+        text-align: center;
+        color: blue;
+        transition: none;
+    }
+    .splashScreenInput::-webkit-inner-spin-button {
+        appearance: none;
+        -webkit-appearance: none;
+    }
+    .splashScreenInput:focus {
+        outline: 1px solid blue;
+        transform: scale(1);
+    }
+    #splashSubmitBtn:disabled {
+        background-color: rgb(217, 217, 217);
+        border: none;
+        box-shadow: none;
+        box-shadow: none;
+        /* outline: 2px solid rgb(192, 192, 192); */
+        outline: none;
+        color: rgb(192, 192, 192);
+        transition: none;
+        transform: none;
+    }
+    #splashSubmitBtn {
+        transition: none;
+    }
+    #splashSubmitBtn:hover {
+        transform: none;
+    }
+    .heroMainDiv {
+        padding: 10%;
+    }
+    #splashSubmitBtn {
+        padding: 10px 30px;
+        background-color: blue;
+        color: white;
+        font-weight: 600;
+        outline: none;
+        border: none;
+        border-radius: 20px;
+        box-shadow: 5px 5px 10px 2px rgba(0, 0, 0, 0.4);
+        margin-top: 5%;
+        transition: transform 0.2s ease-in-out;
+        /* flex: 1; */
+    }
+    .subDiv {
+        height: 80vh;
     }
 }

@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 
-function Overlay({ tries, winner, resetGame, socket, username }) {
-    const [player1, setPlayer1] = useState("");
-    const [player2, setPlayer2] = useState("");
-    React.useEffect(() => {
-        socket.on("userInfo", (player1, player2) => {
-            setPlayer1(player1);
-            setPlayer2(player2);
-        });
-    }, []);
+function Overlay({
+    winner,
+    resetGame,
+    socket,
+    username,
+    firstPlayer,
+    secondPlayer,
+}) {
     return (
         <div
             style={{
@@ -39,9 +38,9 @@ function Overlay({ tries, winner, resetGame, socket, username }) {
                 }}
             >
                 {winner === 1
-                    ? player1 + " ( X ) wins ! "
+                    ? firstPlayer + " ( X ) wins ! "
                     : winner === 0
-                    ? player2 + " ( O ) wins !"
+                    ? secondPlayer + " ( O ) wins !"
                     : winner === 2
                     ? "It's a Tie 😅"
                     : "Waiting "}
@@ -49,7 +48,7 @@ function Overlay({ tries, winner, resetGame, socket, username }) {
             <br />{" "}
             <button
                 onClick={() => {
-                    resetGame();
+                    resetGame(true);
                 }}
                 style={{
                     backgroundColor: "white",

@@ -1,47 +1,70 @@
 import React, { useState } from "react";
-import "./Header.css";
+import { useNavigate } from "react-router-dom";
+import "../styles/Header.css";
 
-function Header({ record, tries, socket, username }) {
-    const [player1, setPlayer1] = useState("");
-    const [player2, setPlayer2] = useState("");
-    React.useEffect(() => {
-        socket.on("userInfo", (player1, player2, callback) => {
-            setPlayer1(player1);
-            setPlayer2(player2);
-            callback({
-                status: "ok",
-            });
-        });
-    }, []);
+function Header({
+    record,
+    username,
+    socket,
+    secondPlayer,
+    firstPlayer,
+    roomKey,
+}) {
+    var boxShadow = "0px 0px 5px 0px rgba(255,255,255,1)";
+    const navigate = useNavigate();
+    const [visibility, setVisibility] = useState(false);
     return (
-        <h1
-            style={{
-                fontWeight: "400",
-                fontVariant: "small-caps",
-                marginBottom: "70px",
-                textAlign: "center",
-            }}
-        >
-            Live
-            <br /> tic-tac-toe
-            <br />
-            {player1 === "" || player2 === ""
-                ? ""
-                : username === player1
-                ? "Playing with '" + player2 + "'"
-                : "Playing with '" + player1 + "'"}
-            {/* {record
-                .substring(0, 3)
-                .concat(
-                    "-",
-                    record.substring(3, 6),
-                    "-",
-                    record.substring(6),
-                    " :",
-                    tries.toString()
-                )} */}
-        </h1>
+        <div className="HeaderMainDiv">
+            <div className="headerSubDiv">
+                <span className="headerSpan1">{username.toUpperCase()}</span>
+                <span
+                    style={{
+                        padding: "0% 10%",
+                        fontSize: "25px",
+                        fontWeight: 400,
+                    }}
+                >
+                    V/S
+                </span>
+                <span className="headerSpan3">
+                    {username !== secondPlayer
+                        ? secondPlayer.toUpperCase()
+                        : firstPlayer.toUpperCase()}
+                </span>
+            </div>
+            <h1 className="headerHeading">
+                tic-tac-toe
+                <br />
+                <span className="headerTitle">
+                    Room Key -{"    "}
+                    <span
+                        onClick={() => {
+                            var x = window.confirm("Leave current room?");
+                            if (x) {
+                                sessionStorage.setItem("roomkey", "");
+                                socket.emit("roomSwitch");
+                                navigate("/login");
+                            }
+                        }}
+                        style={{
+                            textDecoration: "underline",
+                            textDecorationStyle: "dashed",
+                            textUnderlineOffset: 3,
+                            textDecorationThickness: 1.2,
+                            cursor: "pointer",
+                            fontSize: "1.5rem",
+                        }}
+                    >
+                        {roomKey}
+                    </span>
+                </span>
+            </h1>
+        </div>
     );
 }
 
 export default Header;
+
+/**
+ *
+ */

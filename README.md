@@ -19,60 +19,24 @@ We've already run this for you in the `Codespaces: server` terminal window below
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) in the built-in Simple Browser (`Cmd/Ctrl + Shift + P > Simple Browser: Show`) to view your running application.
 
-The page will reload automatically when you make changes.\
-You may also see any lint errors in the console.
+Made by NAMAN
+https://www.github.com/namannangia
 
-### `npm test`
+Code logics shortened using AI after proper testing
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+WORKING MECHANISM
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+1.  A 300x300 CANVAS IS DRAWN
+2.  2 spacing lines horizontally with 100px margin are added using makeBoard function
+3.  2 spacing lines vertically with 100px margin are added using makeBoard function
+4.  Ranges are specified mapping to 9 different imaginary boxes where symbols will be drawn using drawSymbol function
+5.  The draw symbol function checks if it is turn of X or 0 to play and draws symbols accordingly
+6.  On Every symbol drawn, a counter is incremented and another function constantly checks for winning combinations
+7.  If any combination is found, games stops, overlay is displayed with winning player info along with PLAY AGAIN button
+8.  UI indications for the player expected to move that turn
+9.  If 9 tries are reached, game ends and a Draw(game Tie) is considered final
+10. UI Indications to prevent double entry on a pre-filled box
+11. Enteries are stored as a 9-character string in a React state named "Record" starting 'a' to 'i'
+12. each digit represents a box starting from zero from top left to 8 in bottom right
+13. This string is then processed to find winning combination with 0 marked as Circle or Player 2 and 1 as Cross or Player 1
+14. After game ends, resetGame() function can be called that clears the canvas and re-draws the markings and resets all states to default
