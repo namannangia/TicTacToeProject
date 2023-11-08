@@ -12,6 +12,7 @@ import Landing2 from "./components/Landing2";
 // });
 const socket = io.connect("http://tictactoe25.adaptable.app:443", {
     transports: ["websocket"],
+    secure: true,
 });
 
 function App() {
