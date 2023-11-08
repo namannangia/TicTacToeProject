@@ -8,6 +8,7 @@ import Hero from "./Hero";
 import Footer from "./Footer";
 import Overlay from "./Overlay";
 import { useNavigate } from "react-router-dom";
+import { io } from "socket.io-client";
 
 function Container({ socket, username, roomKey, firstPlayer, secondPlayer }) {
     const [record, setRecord] = React.useState("abcdefghi");
@@ -59,7 +60,6 @@ function Container({ socket, username, roomKey, firstPlayer, secondPlayer }) {
     }
 
     React.useEffect(() => {
-        // if (!socket.connected) navigate("/");
         makeBoard(factor);
         socket.on("move", (record, chance) => {
             console.log("Record rcvd " + record + " chance rcvd: " + chance);
@@ -76,8 +76,8 @@ function Container({ socket, username, roomKey, firstPlayer, secondPlayer }) {
             console.log("Reset Board request rcvd");
             resetGame(false);
         });
-        socket.on("lessUsers", () => {
-            toast.error("Opponent Left the game");
+        socket.on("holdGame", () => {
+            setWinner(4);
         });
     }, []);
 

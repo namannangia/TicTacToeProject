@@ -7,6 +7,9 @@ import Landing from "./components/Landing";
 import { toast } from "react-toastify";
 import Overhead from "./components/Overhead";
 import Landing2 from "./components/Landing2";
+// const socket = io.connect("http://localhost:3000", {
+//     transports: ["websocket"],
+// });
 const socket = io.connect("http://tictactoe25.adaptable.app:443", {
     transports: ["websocket"],
 });

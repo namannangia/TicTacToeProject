@@ -3,6 +3,7 @@ import "../styles/Landing2.css";
 import { useNavigate } from "react-router-dom";
 function Landing2() {
     const navigate = useNavigate();
+    if (sessionStorage.getItem("user")) navigate("/login");
     return (
         <div
             className="Landing2"
