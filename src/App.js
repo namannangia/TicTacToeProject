@@ -10,9 +10,8 @@ import Landing2 from "./components/Landing2";
 // const socket = io.connect("http://localhost:3000", {
 //     transports: ["websocket"],
 // });
-const socket = io.connect("http://tictactoe25.adaptable.app:443", {
+const socket = io.connect("https://tictactoe25.adaptable.app:443", {
     transports: ["websocket"],
-    secure: true,
 });
 
 function App() {
