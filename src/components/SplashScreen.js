@@ -18,7 +18,7 @@ function SplashScreen({
 }) {
     const navigate = useNavigate();
     React.useEffect(() => {
-        // if (!socket.connected) navigate("/");
+        if (!socket.connected) navigate("/");
         socket.on("start", (callback) => {
             console.log("Game start request received", username);
             callback({ staus: "ok" });

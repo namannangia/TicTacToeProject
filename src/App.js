@@ -6,10 +6,42 @@ import { io } from "socket.io-client";
 import Landing from "./components/Landing";
 import { toast } from "react-toastify";
 import Overhead from "./components/Overhead";
+import Landing2 from "./components/Landing2";
+const socket = io.connect("http://tictactoe25.adaptable.app:443", {
+    transports: ["websocket"],
+});
 
 function App() {
-    const [socket, setSocket] = React.useState(io.connect(""));
-
+    React.useEffect(() => {
+        socket.on("notif", (obj) => {
+            switch (obj.code) {
+                case 102:
+                    //waiting for more players
+                    toast.info(obj.message, {
+                        isLoading: true,
+                    });
+                    break;
+                case 409:
+                    //username Conflict
+                    //OR
+                    //Move Conflict
+                    toast.error(obj.message);
+                    setLoading(false);
+                    break;
+                case 503:
+                    //room full
+                    toast.error(obj.message);
+                    setLoading(false);
+                    break;
+                case 403:
+                    //Move forbidden
+                    toast.error(obj.message);
+                    break;
+                default:
+                    break;
+            }
+        });
+    }, []);
     const [username, setUsername] = React.useState(
         sessionStorage.getItem("user") ? sessionStorage.getItem("user") : ""
     );
@@ -41,16 +73,7 @@ function App() {
                         />
                     }
                 />
-                <Route
-                    path=""
-                    element={
-                        <Landing
-                            socket={socket}
-                            setLoading={setLoading}
-                            setSocket={setSocket}
-                        />
-                    }
-                />
+                <Route path="" element={<Landing2 socket={socket} />} />
                 <Route
                     path="game"
                     element={

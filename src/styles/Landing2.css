@@ -1,0 +1,40 @@
+.Landin2button {
+    align-self: center;
+    height: 70px;
+    width: 200px;
+    text-wrap: nowrap;
+    margin: 50% 0%;
+    font-size: 20px;
+    font-family: cursive;
+    border-radius: 50px;
+    outline: none;
+    border: none;
+    padding: 5%;
+    color: blue;
+    transition: all 0.2s;
+    box-shadow: 5px 5px 0px 0px rgba(0, 0, 0, 0.4);
+}
+.Landin2button:disabled:hover::after {
+    content: "";
+}
+.Landin2button:hover::after {
+    /* content: " »"; */
+}
+.Landin2button:before {
+    content: "";
+}
+.Landin2button:hover {
+    /* scale: 1.1; */
+    border: 12px groove blue;
+    box-shadow: none;
+}
+.Landin2button:disabled:hover {
+    scale: 1;
+    border: none;
+    box-shadow: 5px 5px 0px 0px rgba(0, 0, 0, 0.4);
+}
+.Landin2button:disabled {
+    color: gray;
+    content: "";
+    border-color: gray;
+}
