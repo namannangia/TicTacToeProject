@@ -1,20 +1,21 @@
 import React from "react";
-import SplashScreen from "./components/SplashScreen";
+import SplashScreen from "./components/SplashScreenOnline";
 import Container from "./components/Container";
-import { Routes, Route, Outlet, Link, redirect } from "react-router-dom";
+import { Routes, Route, Outlet } from "react-router-dom";
 import { io } from "socket.io-client";
 import Landing from "./components/Landing";
 import { toast } from "react-toastify";
 import Overhead from "./components/Overhead";
 import Landing2 from "./components/Landing2";
-const socket = io.connect("https://tictactoe-ueyb.onrender.com:443");
+// const socket = io.connect("https://tictactoe-ueyb.onrender.com:443");
 // const socket = io.connect("https://tictactoe25.adaptable.app:443", {
 //     transports: ["websocket"],
 // });
 
 function App() {
+    const socket = React.useRef(io.connect("http://155.248.249.82:3000/"));
     React.useEffect(() => {
-        socket.on("notif", (obj) => {
+        socket.current.on("notif", (obj) => {
             switch (obj.code) {
                 case 102:
                     //waiting for more players
@@ -66,7 +67,7 @@ function App() {
                             setUsername={setUsername}
                             roomKey={roomKey}
                             setRoomKey={setRoomKey}
-                            socket={socket}
+                            socket={socket.current}
                             setSecondPlayer={setSecondPlayer}
                             setFirstPlayer={setFirstPlayer}
                             loading={loading}
@@ -74,12 +75,12 @@ function App() {
                         />
                     }
                 />
-                <Route path="" element={<Landing2 socket={socket} />} />
+                <Route path="" element={<Landing2 socket={socket.current} />} />
                 <Route
                     path="game"
                     element={
                         <Container
-                            socket={socket}
+                            socket={socket.current}
                             username={username}
                             roomKey={roomKey}
                             secondPlayer={secondPlayer}

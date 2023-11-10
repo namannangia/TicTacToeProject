@@ -82,7 +82,6 @@
     color: blue;
     display: flex;
     font-weight: 400;
-    outline: 2px solid blue;
     align-items: center;
     border: none;
     text-align: center;
@@ -91,6 +90,9 @@
     margin: 5% 0%;
     text-align: "center";
     transition: transform 0.2s ease-in-out;
+}
+#randomBtn:hover {
+    outline: 2px solid blue;
 }
 #randomBtn:disabled {
     background-color: rgb(217, 217, 217);

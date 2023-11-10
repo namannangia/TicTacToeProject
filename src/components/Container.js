@@ -21,9 +21,28 @@ function Container({ socket, username, roomKey, firstPlayer, secondPlayer }) {
 
     console.log("Username:", username, " Key", roomKey);
     React.useEffect(() => {
-        if (!(x2 === 0 && y2 === 0)) {
-            console.log("Sending input to server");
-            socket.emit("input", { x: x2, y: y2 });
+        if (socket.connected === true) {
+            if (!(x2 === 0 && y2 === 0)) {
+                console.log("Sending input to server");
+                socket.emit("input", { x: x2, y: y2 });
+            }
+        } else {
+            socket.current = io.connect("https//localhost:3000");
+            socket.timeout(1000).emit(
+                "setInitial",
+                {
+                    username: username,
+                    roomKey: roomKey,
+                },
+                (err, val) => {
+                    if (err) {
+                        toast.error("Connection timed out");
+                        setTimeout(() => {
+                            window.confirm("Change server URL?");
+                        }, 200);
+                    }
+                }
+            );
         }
     }, [y2]);
     function drawLine(x1, y1, x2, y2) {

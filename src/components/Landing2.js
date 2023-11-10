@@ -1,9 +1,11 @@
 import React from "react";
 import "../styles/Landing2.css";
 import { useNavigate } from "react-router-dom";
-function Landing2() {
+import { toast } from "react-toastify";
+function Landing2({ socket }) {
     const navigate = useNavigate();
-    if (sessionStorage.getItem("user")) navigate("/login");
+    if (socket.connected !== true)
+        if (sessionStorage.getItem("user")) navigate("/login");
     return (
         <div
             className="Landing2"
@@ -14,38 +16,56 @@ function Landing2() {
                 alignItems: "center",
                 // width: "200px",
                 textAlign: "center",
-                paddingTop: "5%",
+                // paddingTop: "5%",
             }}
         >
             <div
                 style={{
+                    display: "flex",
+                    flexDirection: "column",
                     flex: 1,
                     width: "200px",
+                    // overflow: "hidden",
                 }}
             >
                 <h1>Game Mode</h1>
                 <div
                     style={{
+                        flex: 1,
                         alignContent: "center",
                     }}
                 >
-                    <button disabled={true} className="Landin2button">
-                        Single player
+                    <button className="Landin2button" onClick={() => {}}>
+                        OFFLINE mode
                     </button>
                 </div>
-
                 <div
                     style={{
+                        flex: 1,
+                        alignContent: "center",
+                    }}
+                >
+                    <button className="Landin2button">V/S AI mode</button>
+                </div>
+                <div
+                    style={{
+                        flex: 1,
                         alignContent: "center",
                     }}
                 >
                     <button
                         onClick={() => {
-                            navigate("/login");
+                            setTimeout(() => {
+                                if (socket.connected) navigate("/login");
+                                else
+                                    toast.error(
+                                        "Server unavailable. Please try agin."
+                                    );
+                            }, 250);
                         }}
                         className="Landin2button"
                     >
-                        Multiplayer{" "}
+                        Online mode 🟢
                     </button>
                 </div>
             </div>

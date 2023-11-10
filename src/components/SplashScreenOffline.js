@@ -5,8 +5,9 @@ import { generateUsername } from "friendly-username-generator";
 import { useNavigate } from "react-router-dom";
 import "../styles/splash.css";
 import MySvg from "../assets/random.svg";
+import { io } from "socket.io-client";
 
-function SplashScreen({
+function SplashScreenOffline({
     setRoomKey,
     roomKey,
     setSecondPlayer,
@@ -19,7 +20,9 @@ function SplashScreen({
 }) {
     const navigate = useNavigate();
     React.useEffect(() => {
-        if (!socket.connected) navigate("/");
+        if (socket.connected === false) {
+            socket.current = io.connect("https//localhost:3000");
+        }
         socket.on("start", (callback) => {
             console.log("Game start request received", username);
             callback({ staus: "ok" });
@@ -190,4 +193,4 @@ function SplashScreen({
     );
 }
 
-export default SplashScreen;
+export default SplashScreenOffline;
