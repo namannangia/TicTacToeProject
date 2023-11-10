@@ -2,15 +2,23 @@ import React from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
-import "../styles/Container.css";
+import "../../styles/Container.css";
 import Header from "./Header";
-import Hero from "./Hero";
+import Hero from "../Common/Hero";
 import Footer from "./Footer";
 import Overlay from "./Overlay";
 import { useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
 
-function Container({ socket, username, roomKey, firstPlayer, secondPlayer }) {
+function Container({
+    socket,
+    socketURL,
+    username,
+    roomKey,
+    firstPlayer,
+    secondPlayer,
+    online,
+}) {
     const [record, setRecord] = React.useState("abcdefghi");
     const [chance, setChance] = React.useState(true);
     const [winner, setWinner] = React.useState(3);
@@ -21,29 +29,14 @@ function Container({ socket, username, roomKey, firstPlayer, secondPlayer }) {
 
     console.log("Username:", username, " Key", roomKey);
     React.useEffect(() => {
-        if (socket.connected === true) {
-            if (!(x2 === 0 && y2 === 0)) {
-                console.log("Sending input to server");
-                socket.emit("input", { x: x2, y: y2 });
-            }
-        } else {
-            socket.current = io.connect("https//localhost:3000");
-            socket.timeout(1000).emit(
-                "setInitial",
-                {
-                    username: username,
-                    roomKey: roomKey,
-                },
-                (err, val) => {
-                    if (err) {
-                        toast.error("Connection timed out");
-                        setTimeout(() => {
-                            window.confirm("Change server URL?");
-                        }, 200);
-                    }
-                }
-            );
+        // if (online) {
+        if (!(x2 === 0 && y2 === 0)) {
+            console.log("Sending input to server");
+            socket.emit("input", { x: x2, y: y2 });
         }
+        // } else {
+        // navigate("/");
+        // }
     }, [y2]);
     function drawLine(x1, y1, x2, y2) {
         const canvas = document.getElementById("myCanvas");
@@ -100,7 +93,7 @@ function Container({ socket, username, roomKey, firstPlayer, secondPlayer }) {
         });
     }, []);
 
-    async function buildBoard() {
+    function buildBoard() {
         var canvas = document.getElementById("myCanvas");
         const ctx = canvas.getContext("2d");
         console.log("Reset Board request accomplished");

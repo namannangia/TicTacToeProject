@@ -8,7 +8,9 @@ Tweakable UI like dark/light mode |
 Game not resetting
 Opponent's or Self game board ui not Resetting after Play Again clicked
 Functionality of Leaving the room and rejoining doesn't work seamlessly (says: username taken)
-
+[IMP] remove socket connection states from app.js to allow connection only in online mode
 --Mobile ui issues--
 irregular proportions
 Change width of toast pop ups
+
+

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../styles/Header.css";
+import "../../styles/Header.css";
 
 function Header({
     record,

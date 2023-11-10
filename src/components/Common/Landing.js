@@ -1,11 +1,19 @@
 import React from "react";
-import "../styles/Landing2.css";
+import "../../styles/Landing2.css";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-function Landing2({ socket }) {
+import axios from "axios";
+function Landing({ socketURL }) {
     const navigate = useNavigate();
-    if (socket.connected !== true)
-        if (sessionStorage.getItem("user")) navigate("/login");
+    const [online, setOnline] = React.useState(false);
+    React.useEffect(() => {
+        axios
+            .get(socketURL)
+            .then((res) => {
+                if (res.data.code === 200) setOnline(true);
+            })
+            .catch((Err) => console.log("Error", Err));
+    }, []);
     return (
         <div
             className="Landing2"
@@ -35,7 +43,12 @@ function Landing2({ socket }) {
                         alignContent: "center",
                     }}
                 >
-                    <button className="Landin2button" onClick={() => {}}>
+                    <button
+                        className="Landin2button"
+                        onClick={() => {
+                            navigate("/offline");
+                        }}
+                    >
                         OFFLINE mode
                     </button>
                 </div>
@@ -43,6 +56,9 @@ function Landing2({ socket }) {
                     style={{
                         flex: 1,
                         alignContent: "center",
+                    }}
+                    onClick={() => {
+                        navigate("/ai");
                     }}
                 >
                     <button className="Landin2button">V/S AI mode</button>
@@ -54,9 +70,10 @@ function Landing2({ socket }) {
                     }}
                 >
                     <button
+                        disabled={!online}
                         onClick={() => {
                             setTimeout(() => {
-                                if (socket.connected) navigate("/login");
+                                if (online) navigate("/online");
                                 else
                                     toast.error(
                                         "Server unavailable. Please try agin."
@@ -65,7 +82,7 @@ function Landing2({ socket }) {
                         }}
                         className="Landin2button"
                     >
-                        Online mode 🟢
+                        {online ? "Online mode 🟢" : "Online mode  🔴"}
                     </button>
                 </div>
             </div>
@@ -73,4 +90,4 @@ function Landing2({ socket }) {
     );
 }
 
-export default Landing2;
+export default Landing;

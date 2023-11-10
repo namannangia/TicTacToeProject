@@ -3,13 +3,14 @@ import { ToastContainer } from "react-toastify";
 import { toast } from "react-toastify";
 import { generateUsername } from "friendly-username-generator";
 import { useNavigate } from "react-router-dom";
-import "../styles/splash.css";
-import MySvg from "../assets/random.svg";
+import "../../styles/splash.css";
+import MySvg from "../../assets/random.svg";
 import { io } from "socket.io-client";
 
-function SplashScreenOffline({
+function SplashScreenOnline({
     setRoomKey,
     roomKey,
+    socketURL,
     setSecondPlayer,
     username,
     setUsername,
@@ -17,12 +18,13 @@ function SplashScreenOffline({
     setFirstPlayer,
     loading,
     setLoading,
+    online,
 }) {
+    // if (!socket.connected) {
+    //     socket = io.connect(socketURL);
+    // }
     const navigate = useNavigate();
     React.useEffect(() => {
-        if (socket.connected === false) {
-            socket.current = io.connect("https//localhost:3000");
-        }
         socket.on("start", (callback) => {
             console.log("Game start request received", username);
             callback({ staus: "ok" });
@@ -31,7 +33,7 @@ function SplashScreenOffline({
             setSecondPlayer(player2);
             setFirstPlayer(player1);
             setLoading(false);
-            navigate("/game");
+            navigate("/online/game");
         });
     }, []);
     React.useEffect(() => {
@@ -173,11 +175,6 @@ function SplashScreenOffline({
                                                     "Connection timed out"
                                                 );
                                                 setLoading((e) => !e);
-                                                setTimeout(() => {
-                                                    window.confirm(
-                                                        "Change server URL?"
-                                                    );
-                                                }, 200);
                                             }
                                         }
                                     );
@@ -193,4 +190,4 @@ function SplashScreenOffline({
     );
 }
 
-export default SplashScreenOffline;
+export default SplashScreenOnline;
