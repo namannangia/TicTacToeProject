@@ -17,7 +17,7 @@ const socketOptions = [
     "https://localhost:3000",
     "http://localhost:3000",
 ];
-const socketURL = socketOptions[4];
+const socketURL = socketOptions[0];
 function App() {
     const [firstPlayer, setFirstPlayer] = React.useState("");
     const [secondPlayer, setSecondPlayer] = React.useState("");
