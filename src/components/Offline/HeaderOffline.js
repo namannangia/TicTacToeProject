@@ -1,13 +1,16 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React from "react";
 import "../../styles/Header.css";
+import { data } from "../Common/datacontext";
 
-function Header({ record, secondPlayer, firstPlayer }) {
-    var boxShadow = "0px 0px 5px 0px rgba(255,255,255,1)";
-    const navigate = useNavigate();
-    const [visibility, setVisibility] = useState(false);
+function Header({ secondPlayer, firstPlayer }) {
+    const { isOn } = React.useContext(data);
     return (
-        <div className="HeaderMainDiv">
+        <div
+            className="HeaderMainDiv"
+            style={{
+                color: !isOn ? "rgba(255,255,255,0.8)" : "rgba(0,0,0,0.8)",
+            }}
+        >
             <div className="headerSubDiv">
                 <span className="headerSpan1">{firstPlayer.toUpperCase()}</span>
                 <span

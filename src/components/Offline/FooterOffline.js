@@ -1,34 +1,28 @@
-import React, { useState } from "react";
+import React from "react";
+import { data } from "../Common/datacontext";
+import { theme } from "../Common/themecontext";
 
-function Footer({ chance, secondPlayer, firstPlayer }) {
-    const [text, setText] = useState(secondPlayer);
+function Footer({ secondPlayer, firstPlayer }) {
+    const { isOn } = React.useContext(theme);
+    const { chance } = React.useContext(data);
     return (
         <div
             style={{
                 flex: 1,
                 marginBottom: "40px",
-                backgroundColor: "#FAF8ED",
+                backgroundColor: isOn ? "#F6F4EB" : "#164863",
             }}
         >
             <h1
                 style={{
-                    margin: "50px 0px 0px 0px",
+                    color: !isOn ? "rgba(255,255,255,0.8)" : "rgba(0,0,0,0.8)",
                     fontWeight: "400",
                     fontVariant: "small-caps",
                     visibility: secondPlayer !== "" ? "visible" : "hidden",
                 }}
             >
-                {chance ? "Blue's" : "Green's"} Turn
+                {chance ? "X's" : "O's"} Turn
             </h1>
-            <h3
-                style={{
-                    margin: "0px",
-                    fontWeight: "400",
-                    fontVariant: "small-caps",
-                }}
-            >
-                {/* should move now! */}
-            </h3>
         </div>
     );
 }

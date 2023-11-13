@@ -1,0 +1,8 @@
+@media screen and (max-width: 415px) {
+    #overlayOffline {
+        background-color: rgba(0, 0, 0, 0.7);
+    }
+}
+#overlayOffline {
+    background-color: rgba(0, 0, 0, 0.7);
+}

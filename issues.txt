@@ -1,16 +1,11 @@
---Game issues--
-
-Landing page required to facilitate single player and mutliplayer game types
 Solution for Socket Reconnection at different levels of game
 Move timeout functionality required (frontend only)
-AI Mode to play with AI 
-Tweakable UI like dark/light mode |   
-Game not resetting
-Opponent's or Self game board ui not Resetting after Play Again clicked
 Functionality of Leaving the room and rejoining doesn't work seamlessly (says: username taken)
-[IMP] remove socket connection states from app.js to allow connection only in online mode
---Mobile ui issues--
-irregular proportions
-Change width of toast pop ups
-
-
+Splashscreen UI Fix to center
+In case of Draw highlighted tiles are not correct 
+Overlay UI fix padding and color scheme
+Common file for Overlay
+Add drop shadow to winning tiles
+New UI for Online Mode
+Theme changes back to dark mode on reload
+Ping method

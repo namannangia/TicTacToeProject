@@ -13,9 +13,7 @@ function Temp({
     setSecondPlayer,
 }) {
     const socket = React.useRef(io.connect(socketURL));
-    socket.current.on("connection", () => {
-        alert("Connected");
-    });
+
     React.useEffect(() => {
         socket.current.on("notif", (obj) => {
             switch (obj.code) {
@@ -88,6 +86,8 @@ function Temp({
                             socketUrl={socketURL}
                             username={username}
                             roomKey={roomKey}
+                            setSecondPlayer={setSecondPlayer}
+                            setFirstPlayer={setFirstPlayer}
                             secondPlayer={secondPlayer}
                             firstPlayer={firstPlayer}
                         />

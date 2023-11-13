@@ -1,18 +1,19 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
+import { data } from "../Common/datacontext";
 
 function Footer({ chance, username, secondPlayer, firstPlayer }) {
-    const [text, setText] = useState(secondPlayer);
+    const { isOn } = useContext(data);
     return (
         <div
             style={{
                 flex: 1,
                 marginBottom: "40px",
-                backgroundColor: "#FAF8ED",
+                backgroundColor: isOn ? "#F6F4EB" : "#164863",
             }}
         >
             <h1
                 style={{
-                    margin: "50px 0px 0px 0px",
+                    color: !isOn ? "rgba(255,255,255,0.8)" : "rgba(0,0,0,0.8)",
                     fontWeight: "400",
                     fontVariant: "small-caps",
                     visibility: secondPlayer !== "" ? "visible" : "hidden",

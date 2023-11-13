@@ -1,24 +1,38 @@
-import React from "react";
+import React, { useContext } from "react";
+import { data } from "../Common/datacontext";
 
-function Overlay({ winner, resetGame, firstPlayer, secondPlayer }) {
+function Overlay({ firstPlayer, secondPlayer, heading }) {
+    const { winner, resetGame } = useContext(data);
+    React.useEffect(() => {
+        if (winner !== 3) {
+            setTimeout(() => {
+                document.getElementById("overlayOffline").style.visibility =
+                    "visible";
+            }, 1250);
+        } else
+            document.getElementById("overlayOffline").style.visibility =
+                "hidden";
+    }, [winner]);
     return (
         <div
+            id="overlayOffline"
             style={{
                 height: "100vh",
                 width: "100vw",
                 position: "absolute",
                 display: "flex",
                 top: "0px",
+                zIndex: 2,
                 flexDirection: "column",
                 alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: "rgba(0,0,0,0.8)",
-                visibility: winner !== 3 ? "visible" : "hidden",
+                backgroundColor: "rgba(0,0,0,0.4)",
             }}
         >
             <h1
                 style={{
+                    position: "relative",
                     justifyContent: "center",
+                    borderRadius: "40px",
                     display: "flex",
                     width: "95vw",
                     alignContent: "center",
@@ -28,6 +42,7 @@ function Overlay({ winner, resetGame, firstPlayer, secondPlayer }) {
                     backgroundColor: "white",
                     color: "black",
                     padding: "5px 10px",
+                    top: "50px",
                 }}
             >
                 {winner === 1
@@ -41,14 +56,17 @@ function Overlay({ winner, resetGame, firstPlayer, secondPlayer }) {
             <br />{" "}
             <button
                 onClick={() => {
-                    resetGame(true);
+                    resetGame();
                 }}
                 style={{
+                    position: "relative",
+                    top: "50px",
+                    fontSize: "20px",
                     backgroundColor: "white",
                     borderRadius: "20px",
                     border: "none",
                     boxShadow: "0px 0px 30px 5px rgba(0,0,0,0.5)",
-                    padding: "1% 2%",
+                    padding: "2% 4%",
                     marginBottom: "2%",
                 }}
             >

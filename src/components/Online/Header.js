@@ -1,20 +1,19 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../styles/Header.css";
+import { theme } from "../Common/themecontext";
 
-function Header({
-    record,
-    username,
-    socket,
-    secondPlayer,
-    firstPlayer,
-    roomKey,
-}) {
-    var boxShadow = "0px 0px 5px 0px rgba(255,255,255,1)";
+function Header({ username, socket, secondPlayer, firstPlayer, roomKey }) {
+    const { isOn } = React.useContext(theme);
     const navigate = useNavigate();
-    const [visibility, setVisibility] = useState(false);
     return (
-        <div className="HeaderMainDiv">
+        <div
+            className="HeaderMainDiv"
+            style={{
+                marginTop: "4%",
+                color: !isOn ? "rgba(255,255,255,0.8)" : "rgba(0,0,0,0.8)",
+            }}
+        >
             <div className="headerSubDiv">
                 <span className="headerSpan1">{username.toUpperCase()}</span>
                 <span
@@ -64,7 +63,3 @@ function Header({
 }
 
 export default Header;
-
-/**
- *
- */

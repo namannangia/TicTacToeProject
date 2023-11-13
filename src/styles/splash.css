@@ -1,31 +1,28 @@
 .splashMainDiv {
-    flex: 1;
     display: flex;
     width: 100vw;
-    height: 70vh;
+    height: 100vh;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background-color: #faf8ed;
 }
 .splashSubDiv {
+    display: flex;
     flex: 1;
-    max-height: 20%;
+    align-items: center;
 }
 .splashHeading {
+    flex: 1;
     font-weight: 400;
     font-variant: small-caps;
-    margin-bottom: 70px;
     text-align: center;
 }
 .splashForm {
     display: flex;
-    flex: 2;
     margin-top: 4%;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 10vh;
     padding: 5% 10%;
     border-radius: 20px;
     background-color: rgba(0, 0, 0, 0.1);
